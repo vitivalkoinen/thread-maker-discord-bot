@@ -44,6 +44,7 @@ async def make_thread(ctx: commands.Context):
 
     if is_exists_thread(ctx.channel, thread_name):
         await ctx.send(f"スレッド「{thread_name}」は既に存在します。")
+        return
 
     # 新しいスレッドを作成
     thread = await ctx.message.create_thread(
