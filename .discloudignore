@@ -1,0 +1,4 @@
+*.zip
+portry.lock
+pyproject.toml
+.env.example
