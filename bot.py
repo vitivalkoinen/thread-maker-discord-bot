@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -40,7 +41,7 @@ async def make_thread(ctx: commands.Context):
     if not isinstance(ctx.channel, discord.TextChannel):
         return
 
-    thread_name = datetime.now().strftime("%Y/%m/%d の授業")
+    thread_name = datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y/%m/%d の授業")
 
     if is_exists_thread(ctx.channel, thread_name):
         await ctx.send(f"スレッド「{thread_name}」は既に存在します。")
