@@ -2,6 +2,7 @@
 
 # Packages
 /dist/*
+*.zip
 
 # Unit test / coverage reports
 .coverage
