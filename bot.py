@@ -1,4 +1,5 @@
 import os
+import asyncio
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import discord
@@ -18,7 +19,7 @@ async def main():
         intents=intents,
     )
     await bot.add_cog(ThreadMakerCommand(bot))
-    bot.run(token)
+    await bot.start(token)
 
 
 class ThreadMakerBot(commands.Bot):
@@ -64,4 +65,4 @@ class ThreadMakerCommand(commands.Cog):
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
