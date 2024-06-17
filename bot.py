@@ -26,6 +26,9 @@ class ThreadMakerBot(commands.Bot):
     async def on_ready(self):
         print("Logged on as", self.user)
 
+    async def on_error(self, event, *args, **kwargs):
+        print(f"Error in {event}: {args} {kwargs}")
+
 
 class ThreadMakerCommand(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
