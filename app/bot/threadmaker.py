@@ -20,9 +20,9 @@ class ThreadMakerBot(commands.Bot):
             router=Index(self).router,
         )
 
-        if os.environ.get("PORTS") is not None:
+        if os.environ.get("PORT") is not None:
             hostname = "localhost"
-            portnumber = int(os.getenv("PORTS", default=5000))
+            portnumber = int(os.getenv("PORT", default=5000))
         else:
             hostname = "0.0.0.0"
             portnumber = int(os.getenv("PORT", default=8000))
@@ -36,7 +36,7 @@ class ThreadMakerBot(commands.Bot):
 
         server = uvicorn.Server(config)
 
-        if os.environ.get("PORTS") is not None:
+        if os.environ.get("PORT") is not None:
             await server.serve()
             print("exit")
             await server.shutdown()
