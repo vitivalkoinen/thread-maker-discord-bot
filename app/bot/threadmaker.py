@@ -20,7 +20,7 @@ class ThreadMakerBot(commands.Bot):
             router=Index(self).router,
         )
 
-        if os.environ.get("PORT") is not None:
+        if os.environ.get("PORT") is None:
             hostname = "localhost"
             portnumber = int(os.getenv("PORT", default=5000))
         else:
