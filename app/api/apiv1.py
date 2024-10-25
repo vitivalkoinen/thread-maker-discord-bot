@@ -1,15 +1,16 @@
-from fastapi import APIRouter, Request
-from typing import Any
+from fastapi import APIRouter
+from typing import Dict
 
 from discord.ext import commands
 
 
 class Index:
-    router = APIRouter()
 
     def __init__(self, bot: commands.Bot):
+        self.router = APIRouter()
         self.bot = bot
 
-    @router.get("/")
-    async def root(self, request: Request) -> dict[str, Any]:
+        self.router.add_api_route("/", self.root, methods=["GET"])
+
+    async def root(self) -> Dict:
         return {"message": f"bot id:{self.bot.application_id}"}
