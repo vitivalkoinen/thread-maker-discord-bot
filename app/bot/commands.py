@@ -1,52 +1,9 @@
-import os
-import asyncio
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
-import requests
 
-
-async def main():
-    load_dotenv()
-    token = str(os.getenv("DISCORD_BOT_TOKEN"))
-    intents = discord.Intents.default()
-    intents.message_content = True
-    intents.members = True
-
-    bot = ThreadMakerBot(
-        command_prefix="!",
-        intents=intents,
-    )
-    await bot.add_cog(ThreadMakerCommand(bot))
-    await bot.start(token)
-
-
-class ThreadMakerBot(commands.Bot):
-    async def on_ready(self):
-        print("Logged on as", self.user)
-
-    async def on_error(self, event, *args, **kwargs):
-        webhook_url = "https://discord.com/api/webhooks/1254227830754250863/23XpJu3Up5ZlLmKv13PbeWMsGmbeUjfYgA3vyo_zBCVYdzg6jU6kVwUGt2efV0S8uXj1"
-        error_message = f"Error in {event}: {args} {kwargs}"
-        payload = {"content": error_message}
-
-        response = requests.post(webhook_url, json=payload)
-        if response.status_code != 204:
-            print(
-                f"Failed to send error message to webhook: {response.status_code} {response.text}"
-            )
-
-
-class ThreadMakerException(Exception):
-    def __init__(self, arg=""):
-        self.arg = arg
-
-
-class ThreadAlreadyExists(ThreadMakerException):
-    def __str__(self):
-        return f"this thread is already exists: {self.arg}"
+from app.bot.errors import ThreadAlreadyExists
 
 
 class ThreadMakerCommand(commands.Cog):
@@ -104,7 +61,3 @@ class ThreadMakerCommand(commands.Cog):
     @staticmethod
     def _generate_class_name() -> str:
         return datetime.now(ZoneInfo("Asia/Tokyo")).strftime("%Y/%m/%d の授業")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
